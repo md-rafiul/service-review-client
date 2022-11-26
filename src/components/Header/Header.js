@@ -7,7 +7,7 @@ const Header = () => {
       <div className="navbar bg-base-100 border-b border-white">
         <div className="flex-1">
           <Link to="/" className="btn btn-ghost normal-case text-xl">
-            daisyUI
+            KhaonLine
           </Link>
         </div>
         <div className="flex-none">
