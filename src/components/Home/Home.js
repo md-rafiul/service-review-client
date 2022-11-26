@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div>
       <div className="text-center">
-        <div className="carousel h-96">
+        <div className="carousel h-96 my-3">
           <div
             id="item1"
             className="carousel-item w-full text-center flex justify-center"

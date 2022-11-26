@@ -12,9 +12,10 @@ const ServiceCard = ({ service }) => {
       <div className="card-body">
         <h2 className="card-title">{service.serviceName}</h2>
         <p>{service?.serviceDetails?.details}</p>
+        <p className=" font-bold">Price: $ {service?.price}</p>
         <div className="card-actions justify-end">
           <Link>
-            <button className="btn btn-primary">Buy Now</button>
+            <button className="btn btn-primary">View Details</button>
           </Link>
         </div>
       </div>
