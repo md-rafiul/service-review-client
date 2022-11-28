@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import FeedbackCard from "./FeedbackCard";
 
 const ServiceFeedback = () => {
   const [feedbacks, setFeedbacks] = useState();
@@ -9,11 +10,17 @@ const ServiceFeedback = () => {
       .then((data) => {
         setFeedbacks(data);
       });
-  }, []);
+  }, [feedbacks]);
 
   console.log("feed", feedbacks);
 
-  return <div>feed</div>;
+  return (
+    <div>
+      {feedbacks.map((feedback) => (
+        <FeedbackCard key={feedback._id} feedback={feedback}></FeedbackCard>
+      ))}
+    </div>
+  );
 };
 
 export default ServiceFeedback;

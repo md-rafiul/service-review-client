@@ -3,7 +3,13 @@ import { Link, useLoaderData } from "react-router-dom";
 import ServiceFeedback from "../ServiceFeedBack/ServiceFeedback";
 
 const ServiceDetails = () => {
+  const user = false;
+
   const service = useLoaderData();
+
+  const handleComment = (event) => {
+    event.preventDefault();
+  };
   return (
     <div className="p-4">
       <div className="card  bg-base-100 shadow-xl mb-4">
@@ -29,8 +35,41 @@ const ServiceDetails = () => {
           </div>
         </div>
       </div>
+      {user ? (
+        <>
+          <div className="card  bg-base-100 shadow-xl">
+            <div className="card-body items-center text-center">
+              <h2 className="card-title p-6">Please Log In to add comment!</h2>
+              <div className="card-actions">
+                <Link to="/login">
+                  <button className="btn btn-primary">Log In</button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <form onSubmit={handleComment}>
+            <div className="card  bg-base-100 shadow-xl">
+              <div className="card-body items-center ">
+                <textarea
+                  className="textarea textarea-bordered w-full mb-4"
+                  placeholder="Type your comment"
+                  name="comment"
+                ></textarea>
+                <div className="card-actions">
+                  <button type="submit" className="btn btn-primary">
+                    Comment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </>
+      )}
 
-      <ServiceFeedback></ServiceFeedback>
+      {/* <ServiceFeedback></ServiceFeedback> */}
     </div>
   );
 };
