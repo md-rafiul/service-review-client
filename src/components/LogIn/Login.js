@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const handleLogin = (event) => {
@@ -39,6 +40,14 @@ const Login = () => {
               </button>
             </div>
           </form>
+          <div className="flex">
+            <p>
+              Already have an account? Please{" "}
+              <Link to="/signup" className=" text-blue-700">
+                Sign Up
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
