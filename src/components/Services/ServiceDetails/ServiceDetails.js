@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
-import ServiceFeedback from "../ServiceFeedBack/ServiceFeedback";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+// import ServiceFeedback from "../ServiceFeedBack/ServiceFeedback";
 
 const ServiceDetails = () => {
   const { user } = useContext(AuthContext);
@@ -15,7 +16,11 @@ const ServiceDetails = () => {
     <div className="p-4">
       <div className="card  bg-base-100 shadow-xl mb-4">
         <figure>
-          <img src={service.serviceImg} alt="" />
+          <PhotoProvider>
+            <PhotoView src={service.serviceImg}>
+              <img src={service.serviceImg} alt="" />
+            </PhotoView>
+          </PhotoProvider>
         </figure>
         <div className="card-body">
           <h2 className="card-title">{service.serviceName}</h2>

@@ -1,9 +1,25 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { Audio } from "react-loader-spinner";
 
 const SignUp = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, loading } = useContext(AuthContext);
+  if (loading) {
+    return (
+      <div className="flex justify-center text-center py-60">
+        <Audio
+          height="80"
+          width="80"
+          radius="9"
+          color="green"
+          ariaLabel="loading"
+          wrapperStyle
+          wrapperClass
+        />
+      </div>
+    );
+  }
   const handleSignup = (event) => {
     event.preventDefault();
     const form = event.target;

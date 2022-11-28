@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useLoaderData } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 import ServiceCard from "../Services/ServiceCard/ServiceCard";
+import { Audio } from "react-loader-spinner";
 
 const Home = () => {
   const services = useLoaderData();
+
+  const { loading } = useContext(AuthContext);
+  if (loading) {
+    return (
+      <div className="flex justify-center text-center py-60">
+        <Audio
+          height="80"
+          width="80"
+          radius="9"
+          color="green"
+          ariaLabel="loading"
+          wrapperStyle
+          wrapperClass
+        />
+      </div>
+    );
+  }
   return (
     <div>
       <div className="text-center">
