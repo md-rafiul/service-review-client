@@ -12,8 +12,10 @@ const FeedbackCard = ({ feedback }) => {
               </div>
             </div>
             <div className=" mx-4 ">
-              <h3 className="font-bold">{feedback.name}</h3>
-              <p className="py-4">{feedback.feedback}</p>
+              <h3 className="font-bold">
+                {feedback.name || feedback.userEmail}
+              </h3>
+              <p className="py-4">{feedback.feedback || feedback.comment}</p>
             </div>
           </div>
         </div>

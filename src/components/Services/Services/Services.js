@@ -5,7 +5,6 @@ import { Audio } from "react-loader-spinner";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 const Services = () => {
   const services = useLoaderData();
-  //   console.log(services);
 
   const { loading } = useContext(AuthContext);
   if (loading) {

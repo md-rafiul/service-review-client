@@ -1,17 +1,53 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import { PhotoProvider, PhotoView } from "react-photo-view";
-// import ServiceFeedback from "../ServiceFeedBack/ServiceFeedback";
+import ServiceFeedback from "../ServiceFeedBack/ServiceFeedback";
 
 const ServiceDetails = () => {
-  const { user } = useContext(AuthContext);
-
   const service = useLoaderData();
+  const { user } = useContext(AuthContext);
+  const [feedbacks, setFeedbacks] = useState([]);
+  let count = 0;
 
   const handleComment = (event) => {
     event.preventDefault();
+    const form = event.target;
+    const comment = form.comment.value;
+
+    count = count + 1;
+
+    const commentData = {
+      comment,
+      name: user.displayName,
+      product: service,
+      productId: service._id,
+      userEmail: user.email,
+    };
+    fetch("http://localhost:5000/feedbacks", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(commentData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          form.reset();
+        }
+      })
+      .catch((er) => console.error(er));
   };
+  useEffect(() => {
+    fetch(`http://localhost:5000/feedbacks?productId=${service._id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setFeedbacks(data);
+      });
+  }, [service._id]);
+
   return (
     <div className="p-4">
       <div className="card  bg-base-100 shadow-xl mb-4">
@@ -26,16 +62,22 @@ const ServiceDetails = () => {
           <h2 className="card-title">{service.serviceName}</h2>
           <p className=" font-bold">Price: $ {service?.price}</p>
           <p>{service?.serviceDetails?.details}</p>
-          <p className=" font-bold ">Ingredients: </p>
 
-          <ul className="mx-6">
-            {service?.serviceDetails?.ingredients.map((ingredient) => (
-              <li>{ingredient}</li>
-            ))}
-          </ul>
+          {service?.serviceDetails?.ingredients ? (
+            <>
+              <p className=" font-bold ">Ingredients: </p>
+              <ul className="mx-6">
+                {service?.serviceDetails?.ingredients.map((ingredient) => (
+                  <li>{ingredient}</li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <></>
+          )}
 
           <div className="card-actions justify-end">
-            <Link to={`/checkout`}>
+            <Link to={``}>
               <button className="btn btn-primary">Order Now</button>
             </Link>
           </div>
@@ -43,7 +85,7 @@ const ServiceDetails = () => {
       </div>
       {user?.uid ? (
         <>
-          <form onSubmit={handleComment}>
+          <form onSubmit={handleComment} className="mb-4">
             <div className="card  bg-base-100 shadow-xl">
               <div className="card-body items-center ">
                 <textarea
@@ -62,7 +104,7 @@ const ServiceDetails = () => {
         </>
       ) : (
         <>
-          <div className="card  bg-base-100 shadow-xl">
+          <div className="card  bg-base-100 shadow-xl mb-4">
             <div className="card-body items-center text-center">
               <h2 className="card-title p-6">Please Log In to add comment!</h2>
               <div className="card-actions">
@@ -75,7 +117,7 @@ const ServiceDetails = () => {
         </>
       )}
 
-      {/* <ServiceFeedback></ServiceFeedback> */}
+      <ServiceFeedback feedbacks={feedbacks}></ServiceFeedback>
     </div>
   );
 };
