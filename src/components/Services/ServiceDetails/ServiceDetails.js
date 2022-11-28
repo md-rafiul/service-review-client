@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useLoaderData } from "react-router-dom";
+import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import ServiceFeedback from "../ServiceFeedBack/ServiceFeedback";
 
 const ServiceDetails = () => {
-  const user = false;
+  const { user } = useContext(AuthContext);
 
   const service = useLoaderData();
 
@@ -35,20 +36,7 @@ const ServiceDetails = () => {
           </div>
         </div>
       </div>
-      {user ? (
-        <>
-          <div className="card  bg-base-100 shadow-xl">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title p-6">Please Log In to add comment!</h2>
-              <div className="card-actions">
-                <Link to="/login">
-                  <button className="btn btn-primary">Log In</button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
+      {user?.uid ? (
         <>
           <form onSubmit={handleComment}>
             <div className="card  bg-base-100 shadow-xl">
@@ -66,6 +54,19 @@ const ServiceDetails = () => {
               </div>
             </div>
           </form>
+        </>
+      ) : (
+        <>
+          <div className="card  bg-base-100 shadow-xl">
+            <div className="card-body items-center text-center">
+              <h2 className="card-title p-6">Please Log In to add comment!</h2>
+              <div className="card-actions">
+                <Link to="/login">
+                  <button className="btn btn-primary">Log In</button>
+                </Link>
+              </div>
+            </div>
+          </div>
         </>
       )}
 
