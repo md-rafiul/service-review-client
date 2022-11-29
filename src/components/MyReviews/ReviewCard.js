@@ -1,6 +1,6 @@
 import React from "react";
 
-const ReviewCard = ({ feedback }) => {
+const ReviewCard = ({ feedback, handleDelete, handleStatUpdate }) => {
   return (
     <div>
       <div className="card bg-base-100 shadow-xl mb-1">
@@ -15,9 +15,14 @@ const ReviewCard = ({ feedback }) => {
               </p>
             </div>
             <div className="">
-              <button className="btn btn-primary my-2  w-24">Edit</button>
+              <button className="btn btn-primary my-2 w-24 ">Edit</button>
               <br />
-              <button className="btn btn-error w-24 ">Delete</button>
+              <button
+                className="btn btn-error w-24 "
+                onClick={() => handleDelete(feedback._id)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>

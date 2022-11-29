@@ -3,8 +3,10 @@ import app from "../Firebase/Firebase.config";
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 
@@ -14,6 +16,7 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const Googleprovider = new GoogleAuthProvider();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -35,6 +38,10 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+  const loginGoogle = () => {
+    setLoading(true);
+    return signInWithPopup(auth, Googleprovider);
+  };
 
   const logOut = () => {
     localStorage.removeItem("genius-token");
@@ -49,6 +56,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     login,
     logOut,
+    loginGoogle,
   };
 
   return (

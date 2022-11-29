@@ -4,7 +4,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Audio } from "react-loader-spinner";
 
 const Login = () => {
-  const { login, loading } = useContext(AuthContext);
+  const { login, loading, setLoading, loginGoogle } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -32,8 +32,38 @@ const Login = () => {
 
     login(email, password)
       .then((result) => {
+        const user = result.user;
+
+        const currentUser = {
+          email: user.email,
+        };
         console.log(result);
-        navigate(from, { replace: true });
+
+        // get jwt token
+        fetch(`http://localhost:5000/jwt`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            localStorage.setItem("review-assignment-11", data.token);
+            setLoading(false);
+            navigate(from, { replace: true });
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleGoogleIN = () => {
+    loginGoogle()
+      .then((result) => {
+        console.log(result);
       })
       .catch((error) => {
         console.error(error);
@@ -74,13 +104,16 @@ const Login = () => {
               </button>
             </div>
           </form>
-          <div className="flex">
-            <p>
-              Already have an account? Please{" "}
+          <div className="mt-2 border-t">
+            <p className="mt-3">
+              New here? Please{" "}
               <Link to="/signup" className=" text-blue-700">
                 Sign Up
               </Link>
             </p>
+            <button className="btn w-full mt-4" onClick={handleGoogleIN}>
+              Sign in with Google
+            </button>
           </div>
         </div>
       </div>

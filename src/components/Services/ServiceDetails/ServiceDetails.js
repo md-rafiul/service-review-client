@@ -3,19 +3,18 @@ import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import ServiceFeedback from "../ServiceFeedBack/ServiceFeedback";
+import FeedbackCard from "../ServiceFeedBack/FeedbackCard";
+import { Audio } from "react-loader-spinner";
 
 const ServiceDetails = () => {
   const service = useLoaderData();
-  const { user } = useContext(AuthContext);
+  const { user, loading, setLoading } = useContext(AuthContext);
   const [feedbacks, setFeedbacks] = useState([]);
-  let count = 0;
 
   const handleComment = (event) => {
     event.preventDefault();
     const form = event.target;
     const comment = form.comment.value;
-
-    count = count + 1;
 
     const commentData = {
       comment,
@@ -41,40 +40,50 @@ const ServiceDetails = () => {
       .catch((er) => console.error(er));
   };
   useEffect(() => {
-    fetch(`http://localhost:5000/feedbacks?productId=${service._id}`)
+    fetch(`http://localhost:5000/feedbacks?productId=${service._id}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem(
+          "review-assignment-11"
+        )} ${user?.email || user?.userEmail}`,
+        params: service._id,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setFeedbacks(data);
+        setLoading(false);
       });
-  }, [service._id]);
+  }, [service._id, setLoading]);
+  if (loading) {
+    return (
+      <div className="flex justify-center text-center py-60">
+        <Audio
+          height="80"
+          width="80"
+          radius="9"
+          color="green"
+          ariaLabel="loading"
+          wrapperStyle
+          wrapperClass
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
       <div className="card  bg-base-100 shadow-xl mb-4">
         <figure>
           <PhotoProvider>
-            <PhotoView src={service.serviceImg}>
-              <img src={service.serviceImg} alt="" />
+            <PhotoView src={service?.serviceImg}>
+              <img src={service?.serviceImg} alt="" />
             </PhotoView>
           </PhotoProvider>
         </figure>
         <div className="card-body">
           <h2 className="card-title">{service.serviceName}</h2>
           <p className=" font-bold">Price: $ {service?.price}</p>
-          <p>{service?.serviceDetails?.details}</p>
-
-          {service?.serviceDetails?.ingredients ? (
-            <>
-              <p className=" font-bold ">Ingredients: </p>
-              <ul className="mx-6">
-                {service?.serviceDetails?.ingredients.map((ingredient) => (
-                  <li>{ingredient}</li>
-                ))}
-              </ul>
-            </>
-          ) : (
-            <></>
-          )}
+          <p>{service?.serviceDetails}</p>
 
           <div className="card-actions justify-end">
             <Link to={``}>
@@ -116,8 +125,9 @@ const ServiceDetails = () => {
           </div>
         </>
       )}
-
-      <ServiceFeedback feedbacks={feedbacks}></ServiceFeedback>
+      {feedbacks?.map((feedback) => (
+        <FeedbackCard key={feedback._id} feedback={feedback}></FeedbackCard>
+      ))}
     </div>
   );
 };

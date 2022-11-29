@@ -4,7 +4,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Audio } from "react-loader-spinner";
 
 const SignUp = () => {
-  const { createUser, loading } = useContext(AuthContext);
+  const { createUser, loading, loginGoogle } = useContext(AuthContext);
   if (loading) {
     return (
       <div className="flex justify-center text-center py-60">
@@ -31,6 +31,15 @@ const SignUp = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  const handleGoogleIN = () => {
+    loginGoogle()
+      .then((result) => {
+        console.log(result);
       })
       .catch((error) => {
         console.error(error);
@@ -84,13 +93,16 @@ const SignUp = () => {
               </button>
             </div>
           </form>
-          <div className="flex">
-            <p>
+          <div className="mt-2 border-t">
+            <p className="mt-3">
               Already have an account? Please{" "}
               <Link to="/login" className=" text-blue-700">
                 Log In
               </Link>
             </p>
+            <button className="btn w-full mt-4" onClick={handleGoogleIN}>
+              Sign in with Google
+            </button>
           </div>
         </div>
       </div>
