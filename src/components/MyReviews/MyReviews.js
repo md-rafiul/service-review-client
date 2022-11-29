@@ -8,11 +8,16 @@ const MyReviews = () => {
   const [feedbacks, setFeedbacks] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/feedbacks?userEmail=${user.email}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("review-assignment-11")}`,
-      },
-    })
+    fetch(
+      `https://service-review-server-assignment-11.vercel.app/feedbacks?userEmail=${user.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            "review-assignment-11"
+          )}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setFeedbacks(data);
@@ -39,9 +44,12 @@ const MyReviews = () => {
       "Are you sure you want to remove this item???"
     );
     if (proceed) {
-      fetch(`http://localhost:5000/feedbacks/${id}`, {
-        method: "DELETE",
-      })
+      fetch(
+        `https://service-review-server-assignment-11.vercel.app/feedbacks/${id}`,
+        {
+          method: "DELETE",
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           console.log(data);

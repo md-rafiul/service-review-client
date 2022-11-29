@@ -18,11 +18,10 @@ const ServiceDetails = () => {
     const commentData = {
       comment,
       name: user.displayName,
-      product: service,
       productId: service._id,
       userEmail: user.email,
     };
-    fetch("http://localhost:5000/feedbacks", {
+    fetch("https://service-review-server-assignment-11.vercel.app/feedbacks", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -33,26 +32,30 @@ const ServiceDetails = () => {
       .then((data) => {
         console.log(data);
         if (data.acknowledged) {
+          setLoading(false);
           form.reset();
         }
       })
       .catch((er) => console.error(er));
   };
   useEffect(() => {
-    fetch(`http://localhost:5000/feedbacks?productId=${service._id}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem(
-          "review-assignment-11"
-        )} ${user?.email || user?.userEmail}`,
-        params: service._id,
-      },
-    })
+    fetch(
+      `https://service-review-server-assignment-11-md-rafiul.vercel.app/feedbacks-all?productId=${service._id}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            "review-assignment-11"
+          )} ${user?.userEmail}`,
+          params: service._id,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setFeedbacks(data);
         setLoading(false);
       });
-  }, [service._id, user.userEmail, user.email, setLoading]);
+  }, [service._id, user?.userEmail, setLoading, handleComment]);
   if (loading) {
     return (
       <div className="flex justify-center text-center py-60">

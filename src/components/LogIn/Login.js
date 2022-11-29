@@ -40,7 +40,7 @@ const Login = () => {
         console.log(result);
 
         // get jwt token
-        fetch(`http://localhost:5000/jwt`, {
+        fetch(`https://service-review-server-assignment-11.vercel.app/jwt`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
