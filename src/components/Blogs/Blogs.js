@@ -13,7 +13,7 @@ const Blogs = () => {
             There are five practical differences between SQL and NoSQL: Language
             Scalability Structure Properties Support and communities 1. Language
             SQL has been around for over 40 years, so it is recognizable,
-            documented, and widely-used. Safe and versatile, it’s particularly
+            documented, and widely-used. Safe and versatile, its particularly
             well suited for complex queries. However, SQL restricts the user to
             working within a predefined tabular schema, and more care must be
             taken to organize and understand the data before it is used. The
@@ -34,26 +34,26 @@ const Blogs = () => {
             vertically, by increasing the processing power of existing hardware.
             NoSQL databases use a master-slave architecture which scales better
             horizontally, with additional servers or nodes. These are useful
-            generalizations, but it’s important to note: SQL databases can be
+            generalizations, but its important to note: SQL databases can be
             scaled horizontally as well, though sharding or partitioning logic
-            is often the user’s onus and not well supported. NoSQL technologies
+            is often the users onus and not well supported. NoSQL technologies
             are diverse and while many rely on the master-slave architecture,
             options for scaling vertically also exist. Savings made using more
             efficient data structures can overwhelm differences in scalability;
             most important is to understand the use case and plan accordingly.
             3. Structure SQL database schemata always represent relational,
             tabular data, with rules about consistency and integrity. They
-            contain tables with columns (attributes) and rows (records), and
-            keys have constrained logical relationships. NoSQL databases need
-            not stick to this format, but generally fit into one of four broad
+            contain tables with columns attributes and rows records, and keys
+            have constrained logical relationships. NoSQL databases need not
+            stick to this format, but generally fit into one of four broad
             categories: Column-oriented databases transpose row-oriented RDBMSs,
             allowing efficient storage of high-dimensional data and individual
             records with varying attributes. Key-Value stores are dictionaries
             which access diverse objects with a key unique to each. Document
             stores hold semi-structured data: objects which contain all of their
             own relevant information, and which can be completely different from
-            each other. Graph databases add the concept of relationships (direct
-            links between objects) to documents, allowing rapid traversal of
+            each other. Graph databases add the concept of relationships direct
+            links between objects to documents, allowing rapid traversal of
             greatly connected data sets. 4. Properties At a high level, SQL and
             NoSQL comply with separate rules for resolving transactions. RDBMSs
             must exhibit four “ACID” properties: Atomicity means all
@@ -68,14 +68,14 @@ const Blogs = () => {
             transaction. NoSQL technologies adhere to the “CAP” theorem, which
             says that in any distributed database, only two of the following
             properties can be guaranteed at once: Consistency: Every request
-            receives the most recent result, or an error. (Note this is
-            different than in ACID) Availability: Every request has a non-error
-            result, regardless of how recent that result is. Partition
-            tolerance: Any delays or losses between nodes will not interrupt the
-            system’s operation. 5. Support and communities SQL databases
-            represent massive communities, stable codebases, and proven
-            standards. Multitudes of examples are posted online and experts are
-            available to support those new to programming relational data. NoSQL
+            receives the most recent result, or an error. Note this is different
+            than in ACID Availability: Every request has a non-error result,
+            regardless of how recent that result is. Partition tolerance: Any
+            delays or losses between nodes will not interrupt the systems
+            operation. 5. Support and communities SQL databases represent
+            massive communities, stable codebases, and proven standards.
+            Multitudes of examples are posted online and experts are available
+            to support those new to programming relational data. NoSQL
             technologies are being adopted quickly, but communities remain
             smaller and more fractured. However, many SQL languages are
             proprietary or associated with large single-vendors, while NoSQL
@@ -94,62 +94,62 @@ const Blogs = () => {
         </div>
         <div className="collapse-content">
           <p className="px-5">
-            JSON Web Token (JWT) is an open standard (RFC 7519) for securely
+            JSON Web Token JWT is an open standard RFC 7519 for securely
             transmitting information between parties as JSON object. It is
             compact, readable and digitally signed using a private key/ or a
-            public key pair by the Identity Provider(IdP). So the integrity and
+            public key pair by the Identity ProviderIdP. So the integrity and
             authenticity of the token can be verified by other parties involved.
             The purpose of using JWT is not to hide data but to ensure the
             authenticity of the data. JWT is signed and encoded, not encrypted.
             JWT is a token based stateless authentication mechanism. Since it is
             a client-side based stateless session, server doesn't have to
-            completely rely on a datastore(database) to save session
-            information. Structure of JWT A JSON Web Token consists of 3 parts
-            separated by a period. header.payload.signature Structure of JWT
-            Header JWT header consists of token type and algorithm used for
-            signing and encoding. Algorithms can be HMAC, SHA256, RSA, HS256 or
-            RS256. [ "typ": "JWT", "alg": "HS256" ] Payload Payload consists of
-            the session data called as claims. Below are some of the the
-            standard claims that we can use, Issuer(iss) Subject (sub) Audience
-            (aud) Expiration time (exp) Issued at (iat) [ "sub": "user10001",
-            "iat": 1569302116 ] Custom claims can also be included in the claim
-            set. When using custom claim sets, Do not put large data in claim
-            sets. Claim sets meant to be compact. Do not put sensitive
-            informations since, JWT can be decoded easily. [ "sub": "user10001",
-            "iat": 1569302116, "role": "admin", "user_id": "user10001" ]
-            Signature Signature is most important part of a JSON Web Token(JWT).
-            Signature is calculated by encoding the header and payload using
-            Base64url Encoding and concatenating them with a period separator.
-            Which is then given to the cryptographic algorithm. // signature
-            algorithm data = base64urlEncode( header ) + "." + base64urlEncode(
-            payload ) signature = HMAC-SHA256( data, secret_salt ) So when the
-            header or payload changes, signature has to calculated again. Only
-            the Identity Provider(IdP) has the private key to calculate the
-            signature which prevents the tampering of token. How it works?
-            Basically the identity provider(IdP) generates a JWT certifying user
-            identity and Resource server decodes and verifies the authenticity
-            of the token using secret salt / public key. JWT User sign-in using
-            username and password or google/facebook. Authentication server
-            verifies the credentials and issues a jwt signed using either a
-            secret salt or a private key. User's Client uses the JWT to access
-            protected resources by passing the JWT in HTTP Authorization header.
-            Resource server then verifies the authenticity of the token using
-            the secret salt/ public key. Security Just like any other
-            authentication mechanism, JWT also has its own pros and cons. Must
-            use HTTPS to secure the Authorization headers. Validate algorithm
-            name explicitly. Do not completely rely on the algorithm mentioned
-            in the header of JWT. There are a few known attacks based on the
-            header like algo none attack, header stripping. Revoking the session
-            of a user from backend server is difficult. Since a JWT is set to
-            automatically expire, If an attacker gets the token before it
-            expires It leads to various exploits. Building a token revocation
-            list on your server to invalidate tokens could be best way to
-            mitigate. If JWT is persisted on cookies, we need to create HttpOnly
-            cookie. This will restrict third party javascripts from reading jwt
-            token from cookie. XSS - backend servers must always sanitize user
-            generated data. CSRF  -  If JWT in persisted on cookies, CSRF
-            attacks are possible. We can mitigate CSRF by using origin of
-            request and special request headers.
+            completely rely on a datastore database to save session information.
+            Structure of JWT A JSON Web Token consists of 3 parts separated by a
+            period. header.payload.signature Structure of JWT Header JWT header
+            consists of token type and algorithm used for signing and encoding.
+            Algorithms can be HMAC, SHA256, RSA, HS256 or RS256. "typ": "JWT",
+            "alg": "HS256" Payload Payload consists of the session data called
+            as claims. Below are some of the the standard claims that we can
+            use, Issuer iss Subject sub Audience aud Expiration time exp Issued
+            at iat "sub": "user10001", "iat": 1569302116 Custom claims can also
+            be included in the claim set. When using custom claim sets, Do not
+            put large data in claim sets. Claim sets meant to be compact. Do not
+            put sensitive informations since, JWT can be decoded easily. "sub":
+            "user10001", "iat": 1569302116, "role": "admin", "user_id":
+            "user10001" Signature Signature is most important part of a JSON Web
+            Token JWT. Signature is calculated by encoding the header and
+            payload using Base64url Encoding and concatenating them with a
+            period separator. Which is then given to the cryptographic
+            algorithm. // signature algorithm data = base64urlEncode header +
+            "." + base64urlEncode payload signature = HMAC-SHA256 data,
+            secret_salt So when the header or payload changes, signature has to
+            calculated again. Only the Identity ProviderIdP has the private key
+            to calculate the signature which prevents the tampering of token.
+            How it works? Basically the identity provider IdP generates a JWT
+            certifying user identity and Resource server decodes and verifies
+            the authenticity of the token using secret salt / public key. JWT
+            User sign-in using username and password or google/facebook.
+            Authentication server verifies the credentials and issues a jwt
+            signed using either a secret salt or a private key. User's Client
+            uses the JWT to access protected resources by passing the JWT in
+            HTTP Authorization header. Resource server then verifies the
+            authenticity of the token using the secret salt/ public key.
+            Security Just like any other authentication mechanism, JWT also has
+            its own pros and cons. Must use HTTPS to secure the Authorization
+            headers. Validate algorithm name explicitly. Do not completely rely
+            on the algorithm mentioned in the header of JWT. There are a few
+            known attacks based on the header like algo none attack, header
+            stripping. Revoking the session of a user from backend server is
+            difficult. Since a JWT is set to automatically expire, If an
+            attacker gets the token before it expires It leads to various
+            exploits. Building a token revocation list on your server to
+            invalidate tokens could be best way to mitigate. If JWT is persisted
+            on cookies, we need to create HttpOnly cookie. This will restrict
+            third party javascripts from reading jwt token from cookie. XSS
+            backend servers must always sanitize user generated data. CSRF If
+            JWT in persisted on cookies, CSRF attacks are possible. We can
+            mitigate CSRF by using origin of request and special request
+            headers.
           </p>
         </div>
       </div>
@@ -221,7 +221,7 @@ const Blogs = () => {
             root directory with the following code. Explanation: If your system
             has 8 CPU then 8 NodeJS instances will be created and every instance
             has its own independent event loop. Now NodeJS can process all
-            request parallelly. They are all share same port (PORT 3000) but not
+            request parallelly. They are all share same port PORT 3000 but not
             state. The master process listens on a port, accepts new connections
             and distributes them across the workers in a round-robin fashion,
             with some built-in smarts to avoid overloading a worker process.
@@ -233,18 +233,17 @@ const Blogs = () => {
             Instance One Node.js Instance Worker threads have: One process
             Multiple threads One event loop per thread One JS Engine Instance
             per thread One Node.js Instance per thread Example: Create an
-            index.js file with the following code. index.js const {Worker} =
-            require('worker_threads'); const worker = new Worker(__filename);
-            worker.on('message', message = console.log(message));
-            worker.postMessage('GeeksforGeeks'); worker.emit(true) Run the
-            server with the following command: node --experimental-worker
-            index.js Note: We have to use the –experimental-worker because
-            Workers Thread modules are still experimental. Output: [ name:
-            ‘GeeksforGeeks’ ] Pros of Worker_Threads: Passing native handles
-            around (http/https request) Deadlock detection. More isolation, so
-            if one process is affected, it won’t affect others. Cons of
-            Worker_Threads: Not good for I/O operations. Spawning Workers is not
-            cheap.
+            index.js file with the following code. index.js const Worker =
+            require'worker_threads'; const worker = new Worker__filename;
+            worker.on'message', message = console.logmessage;
+            worker.postMessage'GeeksforGeeks'; worker.emit true Run the server
+            with the following command: node --experimental-worker index.js
+            Note: We have to use the experimental-worker because Workers Thread
+            modules are still experimental. Output: name: GeeksforGeeks Pros of
+            Worker_Threads: Passing native handles around (http/https request)
+            Deadlock detection. More isolation, so if one process is affected,
+            it wont affect others. Cons of Worker_Threads: Not good for I/O
+            operations. Spawning Workers is not cheap.
           </p>
         </div>
       </div>

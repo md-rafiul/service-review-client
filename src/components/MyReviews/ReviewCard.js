@@ -1,6 +1,7 @@
 import React from "react";
 
 const ReviewCard = ({ feedback, handleDelete, handleStatUpdate }) => {
+  console.log(feedback);
   return (
     <div>
       <div className="card bg-base-100 shadow-xl mb-1">
@@ -8,7 +9,7 @@ const ReviewCard = ({ feedback, handleDelete, handleStatUpdate }) => {
           <div className="flex content-center ">
             <div className=" mx-4 grow ">
               <h3 className="font-bold">
-                Service Name: {feedback.product.serviceName}
+                Service Name: {feedback.product?.serviceName}
               </h3>
               <p className="py-4">
                 Review: {feedback.feedback || feedback.comment}

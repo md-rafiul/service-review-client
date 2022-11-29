@@ -6,6 +6,7 @@ const Header = () => {
   const { user, logOut } = useContext(AuthContext);
 
   const handleLogOut = () => {
+    localStorage.removeItem("review-assignment-11");
     logOut().then().catch();
   };
   return (

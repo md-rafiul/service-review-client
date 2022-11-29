@@ -9,6 +9,7 @@ const ServiceDetails = () => {
   const service = useLoaderData();
   const { user, loading, setLoading } = useContext(AuthContext);
   const [feedbacks, setFeedbacks] = useState([]);
+  // console.log(service);
 
   const handleComment = (event) => {
     event.preventDefault();
@@ -17,9 +18,11 @@ const ServiceDetails = () => {
 
     const commentData = {
       comment,
+      product: service,
       name: user.displayName,
       productId: service._id,
       userEmail: user.email,
+      img: user.photoURL,
     };
     fetch("https://service-review-server-assignment-11.vercel.app/feedbacks", {
       method: "POST",

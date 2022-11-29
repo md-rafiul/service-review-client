@@ -64,6 +64,28 @@ const Login = () => {
     loginGoogle()
       .then((result) => {
         console.log(result);
+        const user = result.user;
+
+        const currentUser = {
+          email: user.email,
+        };
+        console.log(result);
+
+        // get jwt token
+        fetch(`https://service-review-server-assignment-11.vercel.app/jwt`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            localStorage.setItem("review-assignment-11", data.token);
+            setLoading(false);
+            navigate(from, { replace: true });
+          });
       })
       .catch((error) => {
         console.error(error);

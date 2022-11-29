@@ -8,7 +8,7 @@ const FeedbackCard = ({ feedback }) => {
           <div className="flex content-center ">
             <div className="avatar">
               <div className="w-12 h-12 rounded-full">
-                <img src={feedback.img} alt="" />
+                <img src={feedback.img || feedback.photoURL} alt="" />
               </div>
             </div>
             <div className=" mx-4 ">
