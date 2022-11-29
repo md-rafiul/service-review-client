@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import { PhotoProvider, PhotoView } from "react-photo-view";
-import ServiceFeedback from "../ServiceFeedBack/ServiceFeedback";
 import FeedbackCard from "../ServiceFeedBack/FeedbackCard";
 import { Audio } from "react-loader-spinner";
 
@@ -53,7 +52,7 @@ const ServiceDetails = () => {
         setFeedbacks(data);
         setLoading(false);
       });
-  }, [service._id, setLoading]);
+  }, [service._id, user.userEmail, user.email, setLoading]);
   if (loading) {
     return (
       <div className="flex justify-center text-center py-60">
