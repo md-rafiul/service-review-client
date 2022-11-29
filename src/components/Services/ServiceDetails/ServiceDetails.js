@@ -106,6 +106,7 @@ const ServiceDetails = () => {
                   className="textarea textarea-bordered w-full mb-4"
                   placeholder="Type your comment"
                   name="comment"
+                  required
                 ></textarea>
                 <div className="card-actions">
                   <button type="submit" className="btn btn-primary">

@@ -105,6 +105,7 @@ const Login = () => {
                   placeholder="Enter your email"
                   className="input input-bordered"
                   name="email"
+                  required
                 />
               </label>
             </div>
@@ -116,6 +117,7 @@ const Login = () => {
                   placeholder="Enter your password"
                   className="input input-bordered"
                   name="password"
+                  required
                 />
               </label>
             </div>
